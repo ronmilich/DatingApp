@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from './_modules/shared.module';
 
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
@@ -25,6 +25,8 @@ import { MemberEditComponent } from './members/member-edit/member-edit.component
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LoadingInterceptor } from './interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
+import { TextInputComponent } from './_form/text-input/text-input.component';
+import { DateInputComponent } from './_form/date-input/date-input.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
     ServerErrorComponent,
     MemberCardComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
+    TextInputComponent,
+    DateInputComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +54,8 @@ import { PhotoEditorComponent } from './photo-editor/photo-editor.component';
     BrowserAnimationsModule,
     SharedModule,
     FormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ReactiveFormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

@@ -9,6 +9,7 @@ namespace API.Data
 
         public DbSet<AppUser> Users { get; set; }
         public DbSet<UserLike> Likes { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -23,13 +24,23 @@ namespace API.Data
               .HasForeignKey(s => s.SourceUserId)
               // deleting option - if deleting user, deleting all related entities
               // if using sqlserver need to type DeleteBehavior.NoAction instead or it wont work 
-              .OnDelete(DeleteBehavior.Cascade); 
+              .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<UserLike>()
-            .HasOne(s => s.LikedUser)
-            .WithMany(l => l.LikedByUsers)
-            .HasForeignKey(s => s.LikedUserId)
-            .OnDelete(DeleteBehavior.Cascade);
+              .HasOne(s => s.LikedUser)
+              .WithMany(l => l.LikedByUsers)
+              .HasForeignKey(s => s.LikedUserId)
+              .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Message>()
+              .HasOne(u => u.Recipient)
+              .WithMany(m => m.MessageRecieved)
+              .OnDelete(DeleteBehavior.Restrict);
+              
+            builder.Entity<Message>()
+              .HasOne(u => u.Sender)
+              .WithMany(m => m.MessageSent)
+              .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
